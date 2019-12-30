@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mapper.RobotprojectMapper">
+    
+    <resultMap type="Robotproject" id="RobotprojectResult">
+        <result property="id"    column="id"    />
+        <result property="num"    column="num"    />
+        <result property="name"    column="name"    />
+        <result property="type1"    column="type1"    />
+        <result property="type2"    column="type2"    />
+        <result property="state"    column="state"    />
+        <result property="approvaltime"    column="approvaltime"    />
+        <result property="approvalstatus"    column="approvalstatus"    />
+        <result property="applytime"    column="applytime"    />
+        <result property="applyid"    column="applyid"    />
+        <result property="applyperson"    column="applyperson"    />
+        <result property="companyinfo"    column="companyinfo"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="otherexplain"    column="otherexplain"    />
+        <result property="applyfile"    column="applyfile"    />
+        <result property="applyfilename"    column="applyfilename"    />
+        <result property="acceptancefile"    column="acceptancefile"    />
+        <result property="acceptancefilename"    column="acceptancefilename"    />
+        <result property="evaluatefile"    column="evaluatefile"    />
+        <result property="evaluatefilename"    column="evaluatefilename"    />
+        <result property="certificatefile"    column="certificatefile"    />
+        <result property="certificatefilename"    column="certificatefilename"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotprojectVo">
+        select id, num, name, type1, type2, state, approvaltime, approvalstatus, applytime, applyid, applyperson, companyinfo, telephone, otherexplain, applyfile, applyfilename, acceptancefile, acceptancefilename, evaluatefile, evaluatefilename, certificatefile, certificatefilename, delete_flag from robotproject
+    </sql>
+
+    <select id="selectRobotprojectList" parameterType="Robotproject" resultMap="RobotprojectResult">
+        <include refid="selectRobotprojectVo"/>
+        <where>  
+            <if test="num != null  and num != ''"> and num = #{num}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type1 != null  and type1 != ''"> and type1 = #{type1}</if>
+            <if test="type2 != null  and type2 != ''"> and type2 = #{type2}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="approvaltime != null  and approvaltime != ''"> and approvaltime = #{approvaltime}</if>
+            <if test="approvalstatus != null  and approvalstatus != ''"> and approvalstatus = #{approvalstatus}</if>
+            <if test="applytime != null  and applytime != ''"> and applytime = #{applytime}</if>
+            <if test="applyid != null  and applyid != ''"> and applyid = #{applyid}</if>
+            <if test="applyperson != null  and applyperson != ''"> and applyperson = #{applyperson}</if>
+            <if test="companyinfo != null  and companyinfo != ''"> and companyinfo = #{companyinfo}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="otherexplain != null  and otherexplain != ''"> and otherexplain = #{otherexplain}</if>
+            <if test="applyfile != null  and applyfile != ''"> and applyfile = #{applyfile}</if>
+            <if test="applyfilename != null  and applyfilename != ''"> and applyfilename like concat('%', #{applyfilename}, '%')</if>
+            <if test="acceptancefile != null  and acceptancefile != ''"> and acceptancefile = #{acceptancefile}</if>
+            <if test="acceptancefilename != null  and acceptancefilename != ''"> and acceptancefilename like concat('%', #{acceptancefilename}, '%')</if>
+            <if test="evaluatefile != null  and evaluatefile != ''"> and evaluatefile = #{evaluatefile}</if>
+            <if test="evaluatefilename != null  and evaluatefilename != ''"> and evaluatefilename like concat('%', #{evaluatefilename}, '%')</if>
+            <if test="certificatefile != null  and certificatefile != ''"> and certificatefile = #{certificatefile}</if>
+            <if test="certificatefilename != null  and certificatefilename != ''"> and certificatefilename like concat('%', #{certificatefilename}, '%')</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectRobotprojectById" parameterType="Long" resultMap="RobotprojectResult">
+        <include refid="selectRobotprojectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotproject" parameterType="Robotproject">
+        insert into robotproject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="num != null  and num != ''">num,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type1 != null  and type1 != ''">type1,</if>
+            <if test="type2 != null  and type2 != ''">type2,</if>
+            <if test="state != null  and state != ''">state,</if>
+            <if test="approvaltime != null  and approvaltime != ''">approvaltime,</if>
+            <if test="approvalstatus != null  and approvalstatus != ''">approvalstatus,</if>
+            <if test="applytime != null  and applytime != ''">applytime,</if>
+            <if test="applyid != null  and applyid != ''">applyid,</if>
+            <if test="applyperson != null  and applyperson != ''">applyperson,</if>
+            <if test="companyinfo != null  and companyinfo != ''">companyinfo,</if>
+            <if test="telephone != null  and telephone != ''">telephone,</if>
+            <if test="otherexplain != null  and otherexplain != ''">otherexplain,</if>
+            <if test="applyfile != null  and applyfile != ''">applyfile,</if>
+            <if test="applyfilename != null  and applyfilename != ''">applyfilename,</if>
+            <if test="acceptancefile != null  and acceptancefile != ''">acceptancefile,</if>
+            <if test="acceptancefilename != null  and acceptancefilename != ''">acceptancefilename,</if>
+            <if test="evaluatefile != null  and evaluatefile != ''">evaluatefile,</if>
+            <if test="evaluatefilename != null  and evaluatefilename != ''">evaluatefilename,</if>
+            <if test="certificatefile != null  and certificatefile != ''">certificatefile,</if>
+            <if test="certificatefilename != null  and certificatefilename != ''">certificatefilename,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="num != null  and num != ''">#{num},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type1 != null  and type1 != ''">#{type1},</if>
+            <if test="type2 != null  and type2 != ''">#{type2},</if>
+            <if test="state != null  and state != ''">#{state},</if>
+            <if test="approvaltime != null  and approvaltime != ''">#{approvaltime},</if>
+            <if test="approvalstatus != null  and approvalstatus != ''">#{approvalstatus},</if>
+            <if test="applytime != null  and applytime != ''">#{applytime},</if>
+            <if test="applyid != null  and applyid != ''">#{applyid},</if>
+            <if test="applyperson != null  and applyperson != ''">#{applyperson},</if>
+            <if test="companyinfo != null  and companyinfo != ''">#{companyinfo},</if>
+            <if test="telephone != null  and telephone != ''">#{telephone},</if>
+            <if test="otherexplain != null  and otherexplain != ''">#{otherexplain},</if>
+            <if test="applyfile != null  and applyfile != ''">#{applyfile},</if>
+            <if test="applyfilename != null  and applyfilename != ''">#{applyfilename},</if>
+            <if test="acceptancefile != null  and acceptancefile != ''">#{acceptancefile},</if>
+            <if test="acceptancefilename != null  and acceptancefilename != ''">#{acceptancefilename},</if>
+            <if test="evaluatefile != null  and evaluatefile != ''">#{evaluatefile},</if>
+            <if test="evaluatefilename != null  and evaluatefilename != ''">#{evaluatefilename},</if>
+            <if test="certificatefile != null  and certificatefile != ''">#{certificatefile},</if>
+            <if test="certificatefilename != null  and certificatefilename != ''">#{certificatefilename},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotproject" parameterType="Robotproject">
+        update robotproject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="num != null  and num != ''">num = #{num},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type1 != null  and type1 != ''">type1 = #{type1},</if>
+            <if test="type2 != null  and type2 != ''">type2 = #{type2},</if>
+            <if test="state != null  and state != ''">state = #{state},</if>
+            <if test="approvaltime != null  and approvaltime != ''">approvaltime = #{approvaltime},</if>
+            <if test="approvalstatus != null  and approvalstatus != ''">approvalstatus = #{approvalstatus},</if>
+            <if test="applytime != null  and applytime != ''">applytime = #{applytime},</if>
+            <if test="applyid != null  and applyid != ''">applyid = #{applyid},</if>
+            <if test="applyperson != null  and applyperson != ''">applyperson = #{applyperson},</if>
+            <if test="companyinfo != null  and companyinfo != ''">companyinfo = #{companyinfo},</if>
+            <if test="telephone != null  and telephone != ''">telephone = #{telephone},</if>
+            <if test="otherexplain != null  and otherexplain != ''">otherexplain = #{otherexplain},</if>
+            <if test="applyfile != null  and applyfile != ''">applyfile = #{applyfile},</if>
+            <if test="applyfilename != null  and applyfilename != ''">applyfilename = #{applyfilename},</if>
+            <if test="acceptancefile != null  and acceptancefile != ''">acceptancefile = #{acceptancefile},</if>
+            <if test="acceptancefilename != null  and acceptancefilename != ''">acceptancefilename = #{acceptancefilename},</if>
+            <if test="evaluatefile != null  and evaluatefile != ''">evaluatefile = #{evaluatefile},</if>
+            <if test="evaluatefilename != null  and evaluatefilename != ''">evaluatefilename = #{evaluatefilename},</if>
+            <if test="certificatefile != null  and certificatefile != ''">certificatefile = #{certificatefile},</if>
+            <if test="certificatefilename != null  and certificatefilename != ''">certificatefilename = #{certificatefilename},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotprojectById" parameterType="Long">
+        delete from robotproject where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotprojectByIds" parameterType="String">
+        delete from robotproject where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
