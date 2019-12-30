@@ -52,6 +52,10 @@
         var removeFlag = [[${@permission.hasPermi('system:robotproject:remove')}]];
         var prefix = ctx + "system/robotproject";
 
+        var type = [[${@dict.getType('robot_project_type')}]];
+        var state = [[${@dict.getType('robot_project_state')}]];
+        
+        
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -74,11 +78,29 @@
                 },
                 {
                     field : 'type1', 
-                    title : '项目类型'
+                    title : '项目类型',
+                    formatter: function(value, row, index) {
+                    	return $.table.selectDictLabel(type, value);
+                    }
                 },
                 {
                     field : 'state', 
-                    title : '项目状态'
+                    title : '项目状态',
+                    formatter: function(value, row, index) {
+                    	return $.table.selectDictLabel(state, value);
+                    }
+                },
+                {
+                    field : 'xmwd', 
+                    title : '项目文档'
+                },
+                {
+                    field : 'gcwd', 
+                    title : '过程文档'
+                },
+                {
+                    field : 'gytp', 
+                    title : '工艺图谱'
                 },
                 {
                     field : 'applytime', 
