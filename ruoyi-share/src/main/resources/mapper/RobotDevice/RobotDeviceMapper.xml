@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.share.mapper.RobotDeviceMapper">
+    
+    <resultMap type="RobotDevice" id="RobotDeviceResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="brand"    column="brand"    />
+        <result property="model"    column="model"    />
+        <result property="area"    column="area"    />
+        <result property="picpath"    column="picpath"    />
+        <result property="content"    column="content"    />
+        <result property="apply"    column="apply"    />
+        <result property="functionText"    column="function_text"    />
+        <result property="rentMoney"    column="rent_money"    />
+        <result property="wirePhone"    column="wire_phone"    />
+        <result property="liaisonPeople"    column="liaison_people"    />
+        <result property="phone"    column="phone"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotDeviceVo">
+        select id, name, type, brand, model, area, picpath, content, apply, function_text, rent_money, wire_phone, liaison_people, phone, create_date, update_date, del_flag from robot_device
+    </sql>
+
+    <select id="selectRobotDeviceList" parameterType="RobotDevice" resultMap="RobotDeviceResult">
+        <include refid="selectRobotDeviceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%') </if>
+            <if test="brand != null  and brand != ''"> and brand like concat('%', #{brand}, '%')</if>
+            <if test="model != null  and model != ''"> and model like concat('%', #{model}, '%')</if>
+            <if test="area != null  and area != ''"> and area  like concat('%', #{area}, '%')</if>
+            <if test="picpath != null  and picpath != ''"> and picpath like concat('%', #{picpath}, '%')</if>
+            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
+            <if test="apply != null  and apply != ''"> and apply like concat('%', #{apply}, '%')</if>
+            <if test="functionText != null  and functionText != ''"> and function_text like concat('%', #{functionText}, '%')</if>
+            <if test="rentMoney != null  and rentMoney != ''"> and rent_money like concat('%', #{rentMoney}, '%')</if>
+            <if test="wirePhone != null  and wirePhone != ''"> and wire_phone like concat('%', #{wirePhone}, '%')</if>
+            <if test="liaisonPeople != null  and liaisonPeople != ''"> and liaison_people like concat('%', #{liaisonPeople}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectRobotDeviceById" parameterType="Long" resultMap="RobotDeviceResult">
+        <include refid="selectRobotDeviceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotDevice" parameterType="RobotDevice" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type != null  and type != ''">type,</if>
+            <if test="brand != null  and brand != ''">brand,</if>
+            <if test="model != null  and model != ''">model,</if>
+            <if test="area != null  and area != ''">area,</if>
+            <if test="picpath != null  and picpath != ''">picpath,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="apply != null  and apply != ''">apply,</if>
+            <if test="functionText != null  and functionText != ''">function_text,</if>
+            <if test="rentMoney != null  and rentMoney != ''">rent_money,</if>
+            <if test="wirePhone != null  and wirePhone != ''">wire_phone,</if>
+            <if test="liaisonPeople != null  and liaisonPeople != ''">liaison_people,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="brand != null  and brand != ''">#{brand},</if>
+            <if test="model != null  and model != ''">#{model},</if>
+            <if test="area != null  and area != ''">#{area},</if>
+            <if test="picpath != null  and picpath != ''">#{picpath},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="apply != null  and apply != ''">#{apply},</if>
+            <if test="functionText != null  and functionText != ''">#{functionText},</if>
+            <if test="rentMoney != null  and rentMoney != ''">#{rentMoney},</if>
+            <if test="wirePhone != null  and wirePhone != ''">#{wirePhone},</if>
+            <if test="liaisonPeople != null  and liaisonPeople != ''">#{liaisonPeople},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotDevice" parameterType="RobotDevice">
+        update robot_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="brand != null  and brand != ''">brand = #{brand},</if>
+            <if test="model != null  and model != ''">model = #{model},</if>
+            <if test="area != null  and area != ''">area = #{area},</if>
+            <if test="picpath != null  and picpath != ''">picpath = #{picpath},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="apply != null  and apply != ''">apply = #{apply},</if>
+            <if test="functionText != null  and functionText != ''">function_text = #{functionText},</if>
+            <if test="rentMoney != null  and rentMoney != ''">rent_money = #{rentMoney},</if>
+            <if test="wirePhone != null  and wirePhone != ''">wire_phone = #{wirePhone},</if>
+            <if test="liaisonPeople != null  and liaisonPeople != ''">liaison_people = #{liaisonPeople},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotDeviceById" parameterType="Long">
+        delete from robot_device where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotDeviceByIds" parameterType="String">
+        delete from robot_device where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
