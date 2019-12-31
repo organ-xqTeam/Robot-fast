@@ -163,10 +163,19 @@
 			var acceptance = uploadFile('acceptancefile', 'acceptancefilename', index);
 			var evaluate = uploadFile('evaluatefile', 'evaluatefilename', index);
 			var certificate = uploadFile('certificatefile', 'certificatefilename', index);
-			var str = "id="+id+"&applyfile="+apply.filePath+"&applyfilename="+apply.fileName
-								+"&acceptancefile="+acceptance.filePath+"&acceptancefilename="+acceptance.fileName
-								+"&evaluatefile="+evaluate.filePath+"&evaluatefilename="+evaluate.fileName
-								+"&certificatefile="+certificate.filePath+"&certificatefilename="+certificate.fileName		
+			var str = "id="+id;
+			if (apply) {
+				str += "&applyfile="+apply.filePath+"&applyfilename="+apply.fileName;
+			}
+			if (acceptance) {
+				str += "&acceptancefile="+acceptance.filePath+"&acceptancefilename="+acceptance.fileName;
+			}
+			if (evaluate) {
+				str += "&evaluatefile="+evaluate.filePath+"&evaluatefilename="+evaluate.fileName;
+			}
+			if (certificate) {
+				str += "&certificatefile="+certificate.filePath+"&certificatefilename="+certificate.fileName;
+			}
 			$.operate.save(prefix + "/edit", str);
    			layer.close(index);
 		}
@@ -178,7 +187,7 @@
         	var path = body.find('#'+path);
         	if (path[0].files[0] == null) {
         		$.modal.alertWarning("请先选择文件路径");
-        		return false;
+        		return null;
         	}
         	formData.append('file', path[0].files[0]);        	
         	$.ajax({
