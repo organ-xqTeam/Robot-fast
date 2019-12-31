@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-schooloutofclass-edit" th:object="${projectfile}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">申请表：<a id="apply" onclick='ondownload()' data-value="*{applyfile}"></a></label>
+                <div class="col-sm-8">
+                    <input name="applyfilename" th:field="*{applyfilename}" class="form-control" type="text" style="display: none">
+			        <input id="applyfile" name="applyfile" class="form-control" type="file">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">受理通知：<a id="acceptance" onclick='ondownload()' data-value="*{acceptancefile}"></a></label>
+                <div class="col-sm-8">
+                    <input name="acceptancefilename" th:field="*{acceptancefilename}" class="form-control" type="text" style="display: none">
+			        <input id="acceptancefile" name="acceptancefile" class="form-control" type="file">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">评价决定表：<a id="evaluate" onclick='ondownload()' data-value="*{evaluatefile}"></a></label>
+                <div class="col-sm-8">
+                    <input name="evaluatefilename" th:field="*{evaluatefilename}" class="form-control" type="text" style="display: none">
+			        <input id="evaluatefile" name="evaluatefile" class="form-control" type="file">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证书：<a id="certificate" onclick='ondownload()' data-value="*{certificatefile}"></a></label>
+                <div class="col-sm-8">
+                    <input name="certificatefilename" th:field="*{certificatefilename}" class="form-control" type="text" style="display: none">
+			        <input id="certificatefile" name="certificatefile" class="form-control" type="file">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+    	$('#apply').text($('input[name="applyfilename"]').val())
+    	$('#acceptance').text($('input[name="acceptancefilename"]').val())
+    	$('#evaluate').text($('input[name="evaluatefilename"]').val())
+    	$('#certificate').text($('input[name="certificatefilename"]').val())
+	    function ondownload(){
+	    	//console.log(event.currentTarget)
+	    	var objtp=$(event.currentTarget).attr("data-value");
+	    	console.log( ctx + "common/download/resource?resource=" + objtp)
+	    	window.location.href = ctx + "common/download/resource?resource=" + objtp;
+	    }
+    </script>
+</body>
+</html>

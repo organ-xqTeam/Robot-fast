@@ -100,6 +100,17 @@ public class RobotprojectController extends BaseController
         mmap.put("robotproject", robotproject);
         return prefix + "/edit";
     }
+    
+    /**
+     * 项目文档修改
+     */
+    @GetMapping("/projectfile/{id}")
+    public String projectfile(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        Robotproject robotproject = robotprojectService.selectRobotprojectById(id);
+        mmap.put("projectfile", robotproject);
+        return prefix + "/projectfile";
+    }
 
     /**
      * 修改保存【请填写功能名称】

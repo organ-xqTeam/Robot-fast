@@ -51,6 +51,7 @@
         var editFlag = [[${@permission.hasPermi('system:robotproject:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:robotproject:remove')}]];
         var prefix = ctx + "system/robotproject";
+        var filefix = ctx + "system/fileinfo";
 
         var type = [[${@dict.getType('robot_project_type')}]];
         var state = [[${@dict.getType('robot_project_state')}]];
@@ -92,15 +93,30 @@
                 },
                 {
                     field : 'xmwd', 
-                    title : '项目文档'
+                    title : '项目文档',
+                    formatter: function(value, row, index) {
+                    	var actions = [];
+                        actions.push('<a href="javascript:void(0)" onclick="projectfile(\''+row.id+'\')">查看</a>');
+                        return actions.join('');
+                    }
                 },
                 {
                     field : 'gcwd', 
-                    title : '过程文档'
+                    title : '过程文档',
+                    formatter: function(value, row, index) {
+                    	var actions = [];
+                        actions.push('<a href="javascript:void(0)" onclick="">查看</a> ');
+                        return actions.join('');
+                    }
                 },
                 {
                     field : 'gytp', 
-                    title : '工艺图谱'
+                    title : '工艺图谱',
+                    formatter: function(value, row, index) {
+                    	var actions = [];
+                        actions.push('<a href="javascript:void(0)" onclick="">查看</a> ');
+                        return actions.join('');
+                    }
                 },
                 {
                     field : 'applytime', 
@@ -128,6 +144,59 @@
             };
             $.table.init(options);
         });
+        
+        function projectfile(id) {
+        	var url = prefix + "/projectfile/" + id;
+    		var options = {
+   				title: '项目文档',
+   				width: "380",
+   				url: url,
+   				callBack: doSubmit
+   			};
+   			$.modal.openOptions(options);
+        }
+        
+        function doSubmit(index, layero){
+        	var body = layer.getChildFrame('body', index);
+			var id  = body.find('#id').val()
+			var apply = uploadFile('applyfile', 'applyfilename', index);
+			var acceptance = uploadFile('acceptancefile', 'acceptancefilename', index);
+			var evaluate = uploadFile('evaluatefile', 'evaluatefilename', index);
+			var certificate = uploadFile('certificatefile', 'certificatefilename', index);
+			var str = "id="+id+"&applyfile="+apply.filePath+"&applyfilename="+apply.fileName
+								+"&acceptancefile="+acceptance.filePath+"&acceptancefilename="+acceptance.fileName
+								+"&evaluatefile="+evaluate.filePath+"&evaluatefilename="+evaluate.fileName
+								+"&certificatefile="+certificate.filePath+"&certificatefilename="+certificate.fileName		
+			$.operate.save(prefix + "/edit", str);
+   			layer.close(index);
+		}
+        
+        function uploadFile(path, name, index) {
+        	var file;
+        	var body = layer.getChildFrame('body', index);
+        	var formData = new FormData();
+        	var path = body.find('#'+path);
+        	if (path[0].files[0] == null) {
+        		$.modal.alertWarning("请先选择文件路径");
+        		return false;
+        	}
+        	formData.append('file', path[0].files[0]);        	
+        	$.ajax({
+        		url: filefix + "/add",
+        		type: 'post',
+        		cache: false,
+        		data: formData,
+        		processData: false,
+        		contentType: false,
+        		dataType: "json",
+        		async: false,
+        		success: function(result) {
+        			file = result.file;
+        		}
+        	});
+        	return file;
+        }
+        
     </script>
 </body>
 </html>
