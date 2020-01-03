@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mapper.RobotcertificationMapper">
+    
+    <resultMap type="Robotcertification" id="RobotcertificationResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="logo"    column="logo"    />
+        <result property="title"    column="title"    />
+        <result property="title2"    column="title2"    />
+        <result property="content"    column="content"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotcertificationVo">
+        select id, type, logo, title, title2, content, delete_flag from robotcertification
+    </sql>
+
+    <select id="selectRobotcertificationList" parameterType="Robotcertification" resultMap="RobotcertificationResult">
+        <include refid="selectRobotcertificationVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="title2 != null  and title2 != ''"> and title2 = #{title2}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectRobotcertificationById" parameterType="Long" resultMap="RobotcertificationResult">
+        <include refid="selectRobotcertificationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotcertification" parameterType="Robotcertification" useGeneratedKeys="true" keyProperty="id">
+        insert into robotcertification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">type,</if>
+            <if test="logo != null  and logo != ''">logo,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="title2 != null  and title2 != ''">title2,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="logo != null  and logo != ''">#{logo},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="title2 != null  and title2 != ''">#{title2},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotcertification" parameterType="Robotcertification">
+        update robotcertification
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="logo != null  and logo != ''">logo = #{logo},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="title2 != null  and title2 != ''">title2 = #{title2},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotcertificationById" parameterType="Long">
+        delete from robotcertification where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotcertificationByIds" parameterType="String">
+        delete from robotcertification where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

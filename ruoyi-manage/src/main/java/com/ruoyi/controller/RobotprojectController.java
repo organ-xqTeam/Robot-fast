@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -41,6 +40,29 @@ public class RobotprojectController extends BaseController
     {
         return prefix + "/robotproject";
     }
+    
+    @GetMapping("/approval/{id}")
+    public String approval(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	Robotproject robotproject = robotprojectService.selectRobotprojectById(id);
+        mmap.put("robotproject", robotproject);
+    	return prefix + "/approval";
+    }
+    @GetMapping("/approval3/{id}")
+    public String approval3(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	Robotproject robotproject = robotprojectService.selectRobotprojectById(id);
+        mmap.put("robotproject", robotproject);
+    	return prefix + "/approval3";
+    }
+    @GetMapping("/approval4/{id}")
+    public String approval4(@PathVariable("id") Long id, ModelMap mmap)
+    {
+    	Robotproject robotproject = robotprojectService.selectRobotprojectById(id);
+        mmap.put("robotproject", robotproject);
+    	return prefix + "/approval4";
+    }
+    
 
     /**
      * 查询【请填写功能名称】列表

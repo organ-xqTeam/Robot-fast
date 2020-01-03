@@ -10,6 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="type1"    column="type1"    />
         <result property="type2"    column="type2"    />
+        <result property="type2_"    column="type2_"    />
+        <result property="type3"    column="type3"    />
         <result property="state"    column="state"    />
         <result property="approvaltime"    column="approvaltime"    />
         <result property="approvalstatus"    column="approvalstatus"    />
@@ -27,13 +29,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="evaluatefilename"    column="evaluatefilename"    />
         <result property="certificatefile"    column="certificatefile"    />
         <result property="certificatefilename"    column="certificatefilename"    />
+        <result property="assessmentfile"    column="assessmentfile"    />
+        <result property="assessmentfilename"    column="assessmentfilename"    />
         <result property="deleteFlag"    column="delete_flag"    />
     </resultMap>
 
     <sql id="selectRobotprojectVo">
-        select id, num, name, type1, type2, state, approvaltime, approvalstatus, applytime, applyid, applyperson, companyinfo, telephone, otherexplain, applyfile, applyfilename, acceptancefile, acceptancefilename, evaluatefile, evaluatefilename, certificatefile, certificatefilename, delete_flag from robotproject
+        select id, num, name, type1, type2, (select title from robotcertification where id=type2) as 'type2_', (select title2 from robotcertification where id=type2) as 'type3', state, approvaltime, approvalstatus, applytime, applyid, applyperson, companyinfo, telephone, otherexplain, applyfile, applyfilename, acceptancefile, acceptancefilename, evaluatefile, evaluatefilename, certificatefile, certificatefilename, assessmentfile, assessmentfilename, delete_flag from robotproject
     </sql>
-
+    
     <select id="selectRobotprojectList" parameterType="Robotproject" resultMap="RobotprojectResult">
         <include refid="selectRobotprojectVo"/>
         <where>  
@@ -58,6 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evaluatefilename != null  and evaluatefilename != ''"> and evaluatefilename like concat('%', #{evaluatefilename}, '%')</if>
             <if test="certificatefile != null  and certificatefile != ''"> and certificatefile = #{certificatefile}</if>
             <if test="certificatefilename != null  and certificatefilename != ''"> and certificatefilename like concat('%', #{certificatefilename}, '%')</if>
+            <if test="assessmentfile != null  and assessmentfile != ''"> and assessmentfile = #{assessmentfile}</if>
+            <if test="assessmentfilename != null  and assessmentfilename != ''"> and assessmentfilename like concat('%', #{assessmentfilename}, '%')</if>
             <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
         </where>
     </select>
@@ -92,6 +98,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evaluatefilename != null  and evaluatefilename != ''">evaluatefilename,</if>
             <if test="certificatefile != null  and certificatefile != ''">certificatefile,</if>
             <if test="certificatefilename != null  and certificatefilename != ''">certificatefilename,</if>
+            <if test="assessmentfile != null  and assessmentfile != ''">assessmentfile,</if>
+            <if test="assessmentfilename != null  and assessmentfilename != ''">assessmentfilename,</if>
             <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -117,6 +125,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evaluatefilename != null  and evaluatefilename != ''">#{evaluatefilename},</if>
             <if test="certificatefile != null  and certificatefile != ''">#{certificatefile},</if>
             <if test="certificatefilename != null  and certificatefilename != ''">#{certificatefilename},</if>
+            <if test="assessmentfile != null  and assessmentfile != ''">#{assessmentfile},</if>
+            <if test="assessmentfilename != null  and assessmentfilename != ''">#{assessmentfilename},</if>
             <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
          </trim>
     </insert>
@@ -145,6 +155,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evaluatefilename != null  and evaluatefilename != ''">evaluatefilename = #{evaluatefilename},</if>
             <if test="certificatefile != null  and certificatefile != ''">certificatefile = #{certificatefile},</if>
             <if test="certificatefilename != null  and certificatefilename != ''">certificatefilename = #{certificatefilename},</if>
+            <if test="assessmentfile != null  and assessmentfile != ''">assessmentfile = #{assessmentfile},</if>
+            <if test="assessmentfilename != null  and assessmentfilename != ''">assessmentfilename = #{assessmentfilename},</if>
             <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
         </trim>
         where id = #{id}

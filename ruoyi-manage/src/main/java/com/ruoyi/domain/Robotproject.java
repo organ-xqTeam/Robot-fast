@@ -34,8 +34,28 @@ public class Robotproject extends BaseEntity
     /** 项目类型(小类) */
     @Excel(name = "项目类型(小类)")
     private String type2;
+    
+    private String type2_;
+    
+    public String getType2_() {
+		return type2_;
+	}
 
-    /** 项目状态 */
+	public void setType2_(String type2_) {
+		this.type2_ = type2_;
+	}
+	
+    private String type3;
+    
+    public String getType3() {
+		return type3;
+	}
+
+	public void setType3(String type3) {
+		this.type3 = type3;
+	}
+
+	/** 项目状态 */
     @Excel(name = "项目状态")
     private String state;
 
@@ -103,6 +123,14 @@ public class Robotproject extends BaseEntity
     @Excel(name = "证书")
     private String certificatefilename;
 
+    /** 评估资料 */
+    @Excel(name = "评估资料")
+    private String assessmentfile;
+
+    /** $column.columnComment */
+    @Excel(name = "评估资料")
+    private String assessmentfilename;
+    
     /** 是否更新 */
     @Excel(name = "是否更新")
     private String deleteFlag;
@@ -305,7 +333,24 @@ public class Robotproject extends BaseEntity
     {
         return certificatefilename;
     }
-    public void setDeleteFlag(String deleteFlag) 
+    
+    public String getAssessmentfile() {
+		return assessmentfile;
+	}
+
+	public void setAssessmentfile(String assessmentfile) {
+		this.assessmentfile = assessmentfile;
+	}
+
+	public String getAssessmentfilename() {
+		return assessmentfilename;
+	}
+
+	public void setAssessmentfilename(String assessmentfilename) {
+		this.assessmentfilename = assessmentfilename;
+	}
+
+	public void setDeleteFlag(String deleteFlag) 
     {
         this.deleteFlag = deleteFlag;
     }

@@ -56,7 +56,6 @@
         var type = [[${@dict.getType('robot_project_type')}]];
         var state = [[${@dict.getType('robot_project_state')}]];
         
-        
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -136,7 +135,7 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-primary btn-xs " href="javascript:void(0)" onclick=""><i class="fa fa-pencil-square-o "></i>专家审批</a> ');
+                        actions.push('<a class="btn btn-primary btn-xs" href="#" onclick="approval(\'' + row.id + '\', \''+row.approvalstatus+'\', \''+row.type1+'\')"><i class="fa fa-pencil-square"></i>专家审核</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
@@ -144,6 +143,35 @@
             };
             $.table.init(options);
         });
+        
+        function approval(id, state, type) {
+        	if (state != 1) {
+        		$.modal.alertError("该项目已审批");
+        		return;
+        	}
+			var url;
+			if (type==1 || type==2 || type==5) {
+	        	url = prefix + "/approval/"+id;
+			}
+			else if (type==3) {
+	        	url = prefix + "/approval3/"+id;
+			}
+			else if (type==4) {
+	        	url = prefix + "/approval4/"+id;
+			}
+			else {
+				$.modal.alertError("项目类型不存在");
+				return;
+			}
+    		var options = {
+   				title: '专家审核',
+   				width: "380",
+   				height: "700",
+   				url: url,
+   				callBack: doSubmit2
+   			};
+   			$.modal.openOptions(options);
+        }
         
         function projectfile(id) {
         	var url = prefix + "/projectfile/" + id;
@@ -180,6 +208,15 @@
    			layer.close(index);
 		}
         
+        function doSubmit2(index, layero){
+        	var body = layer.getChildFrame('body', index);
+			var id  = body.find('#id').val();
+			var approvalstatus = body.find('#approvalstatus').val();
+        	var str = "id="+id+"&approvalstatus="+approvalstatus+"&approvaltime="+getnowtime();
+			$.operate.save(prefix + "/edit", str);
+   			layer.close(index);
+		}
+        
         function uploadFile(path, name, index) {
         	var file;
         	var body = layer.getChildFrame('body', index);
@@ -204,6 +241,26 @@
         		}
         	});
         	return file;
+        }
+        
+        function getnowtime() {
+			var d=new Date();
+			var year=d.getFullYear();
+			var month=change(d.getMonth()+1);
+			var day=change(d.getDate());
+			var hour=change(d.getHours());
+			var minute=change(d.getMinutes());
+			var second=change(d.getSeconds());
+			function change(t){
+		    	if(t<10){
+		    		return "0"+t;
+		    	}
+		    	else{
+		     		return t;
+		    	}
+			}
+			var time=year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+			return time;
         }
         
     </script>
