@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('机器人设备列表')" />
-    
+    <th:block th:include="include :: header('机器人需求列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -17,11 +16,10 @@
                             </li>
                             <li>
                                 <p>类型：</p>
-                                 <input type="text" name="type"/>
-                                <!-- <select name="type" th:with="type=${@dict.getType('')}">
+                                <select name="type" th:with="type=${@dict.getType('')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select> -->
+                                </select>
                             </li>
                             <li>
                                 <p>品牌：</p>
@@ -34,6 +32,10 @@
                             <li>
                                 <p>地区：</p>
                                 <input type="text" name="area"/>
+                            </li>
+                            <li>
+                                <p>图片路径：</p>
+                                <input type="text" name="picpath"/>
                             </li>
                             <li>
                                 <p>详细内容：</p>
@@ -85,16 +87,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="share:RobotDevice:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="share:RobotDeviceneed:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="share:RobotDevice:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="share:RobotDeviceneed:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="share:RobotDevice:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="share:RobotDeviceneed:remove">
                     <i class="fa fa-remove"></i> 删除
-                </a> -->
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="share:RobotDevice:export">
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="share:RobotDeviceneed:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -105,9 +107,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('share:RobotDevice:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('share:RobotDevice:remove')}]];
-        var prefix = ctx + "share/RobotDevice";
+        var editFlag = [[${@permission.hasPermi('share:RobotDeviceneed:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('share:RobotDeviceneed:remove')}]];
+        var prefix = ctx + "share/RobotDeviceneed";
 
         $(function() {
             var options = {
@@ -116,7 +118,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "机器人设备",
+                modalName: "机器人需求",
                 columns: [{
                     checkbox: true
                 },
@@ -145,8 +147,14 @@
                     field : 'area', 
                     title : '地区'
                 },
-                
-                
+                {
+                    field : 'picpath', 
+                    title : '图片路径'
+                },
+                {
+                    field : 'content', 
+                    title : '详细内容'
+                },
                 {
                     field : 'apply', 
                     title : '应用行业'

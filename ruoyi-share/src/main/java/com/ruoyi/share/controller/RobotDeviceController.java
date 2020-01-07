@@ -1,5 +1,6 @@
 package com.ruoyi.share.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
+import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.share.domain.RobotDevice;
+import com.ruoyi.share.domain.RobotDeviceApply;
+import com.ruoyi.share.service.IRobotDeviceApplyService;
 import com.ruoyi.share.service.IRobotDeviceService;
+import com.ruoyi.share.service.impl.RobotDeviceApplyServiceImpl;
+import com.ruoyi.share.util.Result;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -38,6 +44,9 @@ public class RobotDeviceController extends BaseController
 
     @Autowired
     private IRobotDeviceService robotDeviceService;
+    
+    @Autowired
+    private IRobotDeviceApplyService  robotDeviceApplyService;
 
     @RequiresPermissions("share:RobotDevice:view")
     @GetMapping()
@@ -46,38 +55,7 @@ public class RobotDeviceController extends BaseController
         return prefix + "/RobotDevice";
     }
     
-    
-    public TableDataInfo shareShow(@RequestBody Map<String, Object> requestParams) {
-    	Object name=requestParams.get("name");
-    	Object type=requestParams.get("type");
-    	Object brand=requestParams.get("brand");
-    	Object model=requestParams.get("model");
-    	Object area=requestParams.get("area");
-    	Object pageNum=requestParams.get("pageNum");
-    	Object pageSize=requestParams.get("pageSize");
-    	//RobotDevice robotDevice
-    	//startPage();
-    	PageHelper.startPage(Integer.valueOf(pageNum.toString()),Integer.valueOf( pageSize.toString()));
-    	RobotDevice robotDevice =new RobotDevice();
-    	if(name!=null) {
-    		robotDevice.setName(name.toString());
-    	}
-    	if(type!=null) {
-    		robotDevice.setType(type.toString());
-    	}
-    	if(brand!=null) {
-    		robotDevice.setBrand(brand.toString());
-    	}
-    	if(model!=null) {
-    		robotDevice.setModel(model.toString());
-    	}
-    	if(area!=null) {
-    		robotDevice.setArea(area.toString());
-    		
-    	}
-        List<RobotDevice> list = robotDeviceService.selectRobotDeviceList(robotDevice);
-        return getDataTable(list);
-    }
+  
 
     /**
      * 查询机器人设备列表

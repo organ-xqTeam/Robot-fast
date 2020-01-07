@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.share.mapper.RobotDeviceApplyMapper">
+    
+    <resultMap type="RobotDeviceApply" id="RobotDeviceApplyResult">
+        <result property="id"    column="id"    />
+        <result property="applyName"    column="apply_name"    />
+        <result property="companyInfo"    column="company_info"    />
+        <result property="phone"    column="phone"    />
+        <result property="explainContent"    column="explain_content"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotDeviceApplyVo">
+        select id, apply_name, company_info, phone, explain_content, device_id, user_id, create_date, update_date, del_flag from robot_device_apply
+    </sql>
+
+    <select id="selectRobotDeviceApplyList" parameterType="RobotDeviceApply" resultMap="RobotDeviceApplyResult">
+        <include refid="selectRobotDeviceApplyVo"/>
+        <where>  
+            <if test="applyName != null  and applyName != ''"> and apply_name like concat('%', #{applyName}, '%')</if>
+            <if test="companyInfo != null  and companyInfo != ''"> and company_info = #{companyInfo}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="explainContent != null  and explainContent != ''"> and explain_content = #{explainContent}</if>
+            <if test="deviceId != null "> and device_id = #{deviceId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            and del_flag ='0' 
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectRobotDeviceApplyById" parameterType="Long" resultMap="RobotDeviceApplyResult">
+        <include refid="selectRobotDeviceApplyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotDeviceApply" parameterType="RobotDeviceApply" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_device_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="applyName != null  and applyName != ''">apply_name,</if>
+            <if test="companyInfo != null  and companyInfo != ''">company_info,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="explainContent != null  and explainContent != ''">explain_content,</if>
+            <if test="deviceId != null ">device_id,</if>
+            <if test="userId != null ">user_id,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="applyName != null  and applyName != ''">#{applyName},</if>
+            <if test="companyInfo != null  and companyInfo != ''">#{companyInfo},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="explainContent != null  and explainContent != ''">#{explainContent},</if>
+            <if test="deviceId != null ">#{deviceId},</if>
+            <if test="userId != null ">#{userId},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotDeviceApply" parameterType="RobotDeviceApply">
+        update robot_device_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="applyName != null  and applyName != ''">apply_name = #{applyName},</if>
+            <if test="companyInfo != null  and companyInfo != ''">company_info = #{companyInfo},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="explainContent != null  and explainContent != ''">explain_content = #{explainContent},</if>
+            <if test="deviceId != null ">device_id = #{deviceId},</if>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotDeviceApplyById" parameterType="Long">
+        delete from robot_device_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotDeviceApplyByIds" parameterType="String">
+        delete from robot_device_apply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

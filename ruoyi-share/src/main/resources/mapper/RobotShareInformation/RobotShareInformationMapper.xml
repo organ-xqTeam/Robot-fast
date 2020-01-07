@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.share.mapper.RobotShareInformationMapper">
+    
+    <resultMap type="RobotShareInformation" id="RobotShareInformationResult">
+        <result property="id"    column="id"    />
+        <result property="picpath"    column="picpath"    />
+        <result property="titile"    column="titile"    />
+        <result property="content"    column="content"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotShareInformationVo">
+        select id, picpath, titile, content, create_date, update_date, del_flag from robot_share_information
+    </sql>
+
+    <select id="selectRobotShareInformationList" parameterType="RobotShareInformation" resultMap="RobotShareInformationResult">
+        <include refid="selectRobotShareInformationVo"/>
+        <where>  
+            <if test="picpath != null  and picpath != ''"> and picpath = #{picpath}</if>
+            <if test="titile != null  and titile != ''"> and titile = #{titile}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            and del_flag = '0'
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectRobotShareInformationById" parameterType="Long" resultMap="RobotShareInformationResult">
+        <include refid="selectRobotShareInformationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotShareInformation" parameterType="RobotShareInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_share_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="picpath != null  and picpath != ''">picpath,</if>
+            <if test="titile != null  and titile != ''">titile,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="picpath != null  and picpath != ''">#{picpath},</if>
+            <if test="titile != null  and titile != ''">#{titile},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotShareInformation" parameterType="RobotShareInformation">
+        update robot_share_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="picpath != null  and picpath != ''">picpath = #{picpath},</if>
+            <if test="titile != null  and titile != ''">titile = #{titile},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotShareInformationById" parameterType="Long">
+        delete from robot_share_information where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotShareInformationByIds" parameterType="String">
+        delete from robot_share_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

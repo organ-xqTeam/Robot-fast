@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.share.mapper.RobotNeedSubmitMapper">
+    
+    <resultMap type="RobotNeedSubmit" id="RobotNeedSubmitResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="modelNumber"    column="model_number"    />
+        <result property="budgetMoney"    column="budget_money"    />
+        <result property="contentInfo"    column="content_info"    />
+        <result property="picpath"    column="picpath"    />
+        <result property="subFlag"    column="sub_flag"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotNeedSubmitVo">
+        select id, name, end_date, model_number, budget_money, content_info, picpath, sub_flag, create_date, update_date, del_flag from robot_need_submit
+    </sql>
+
+    <select id="selectRobotNeedSubmitList" parameterType="RobotNeedSubmit" resultMap="RobotNeedSubmitResult">
+        <include refid="selectRobotNeedSubmitVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="modelNumber != null  and modelNumber != ''"> and model_number = #{modelNumber}</if>
+            <if test="budgetMoney != null  and budgetMoney != ''"> and budget_money = #{budgetMoney}</if>
+            <if test="contentInfo != null  and contentInfo != ''"> and content_info = #{contentInfo}</if>
+            <if test="picpath != null  and picpath != ''"> and picpath = #{picpath}</if>
+            <if test="subFlag != null  and subFlag != ''"> and sub_flag = #{subFlag}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            and del_flag ='0' 
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectRobotNeedSubmitById" parameterType="Long" resultMap="RobotNeedSubmitResult">
+        <include refid="selectRobotNeedSubmitVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotNeedSubmit" parameterType="RobotNeedSubmit" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_need_submit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="endDate != null ">end_date,</if>
+            <if test="modelNumber != null  and modelNumber != ''">model_number,</if>
+            <if test="budgetMoney != null  and budgetMoney != ''">budget_money,</if>
+            <if test="contentInfo != null  and contentInfo != ''">content_info,</if>
+            <if test="picpath != null  and picpath != ''">picpath,</if>
+            <if test="subFlag != null  and subFlag != ''">sub_flag,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="endDate != null ">#{endDate},</if>
+            <if test="modelNumber != null  and modelNumber != ''">#{modelNumber},</if>
+            <if test="budgetMoney != null  and budgetMoney != ''">#{budgetMoney},</if>
+            <if test="contentInfo != null  and contentInfo != ''">#{contentInfo},</if>
+            <if test="picpath != null  and picpath != ''">#{picpath},</if>
+            <if test="subFlag != null  and subFlag != ''">#{subFlag},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotNeedSubmit" parameterType="RobotNeedSubmit">
+        update robot_need_submit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="endDate != null ">end_date = #{endDate},</if>
+            <if test="modelNumber != null  and modelNumber != ''">model_number = #{modelNumber},</if>
+            <if test="budgetMoney != null  and budgetMoney != ''">budget_money = #{budgetMoney},</if>
+            <if test="contentInfo != null  and contentInfo != ''">content_info = #{contentInfo},</if>
+            <if test="picpath != null  and picpath != ''">picpath = #{picpath},</if>
+            <if test="subFlag != null  and subFlag != ''">sub_flag = #{subFlag},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotNeedSubmitById" parameterType="Long">
+        delete from robot_need_submit where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotNeedSubmitByIds" parameterType="String">
+        delete from robot_need_submit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

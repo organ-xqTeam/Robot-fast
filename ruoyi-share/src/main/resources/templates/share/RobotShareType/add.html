@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增共享类型')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-RobotShareType-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类型名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类型属性 ：</label>
+                <div class="col-sm-8">
+                    <select name="type" class="form-control m-b">
+                       	 	<option value="1">类别</option>
+                            <option value="2">品牌</option>
+                            <option value="3">型号</option>
+                            <option value="4">地区</option>
+                    </select>
+                    <!-- <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span> -->
+                </div>
+            </div>
+           
+          
+         
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "share/RobotShareType"
+        $("#form-RobotShareType-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-RobotShareType-add').serialize());
+            }
+        }
+
+        $("input[name='createDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='updateDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

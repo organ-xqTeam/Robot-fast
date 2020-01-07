@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增机器人设备')" />
+    <th:block th:include="include :: header('新增机器人需求')" />
     <th:block th:include="include :: datetimepicker-css" />
-    <th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-RobotDevice-add">
+        <form class="form-horizontal m" id="form-RobotDeviceneed-add">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">名称：</label>
                 <div class="col-sm-8">
@@ -17,9 +16,11 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">类型：</label>
                 <div class="col-sm-8">
-                    <input name="type" class="form-control" type="text">
+                    <select name="type" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-               
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">品牌：</label>
@@ -39,8 +40,18 @@
                     <input name="area" class="form-control" type="text">
                 </div>
             </div>
-            
-            
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">图片路径：</label>
+                <div class="col-sm-8">
+                    <input name="picpath" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">详细内容：</label>
+                <div class="col-sm-8">
+                    <input name="content" class="form-control" type="text">
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">应用行业：</label>
                 <div class="col-sm-8">
@@ -77,59 +88,43 @@
                     <input name="phone" class="form-control" type="text">
                 </div>
             </div>
-           <!--  <div class="form-group">    
-                <label class="col-sm-3 control-label">图片路径：</label>
-                <div class="col-sm-8">
-                    <input name="picpath" class="form-control" type="text">
-                </div>
-            </div> -->
             <div class="form-group">    
-               <label class="col-sm-3 control-label">图片路径：</label>
+                <label class="col-sm-3 control-label">创建时间：</label>
                 <div class="col-sm-8">
-                    <input name="picpath" class="form-control" type="text" style="display: none">
-			         <input id="filePath" name="filePath"  class="form-control" multiple="multiple"  accept="image/gif, image/jpeg, image/png, image/jpg" type="file">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="createDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
                 </div>
             </div>
             <div class="form-group">    
-	            <div class="col-sm-12">
-	                <div class="ibox float-e-margins">
-	                    <div class="ibox-title">
-	                        <h5>详细内容：</h5>
-	                    </div>
-	                    <div class="ibox-content no-padding">
-	                        <div class="summernote">
-	                            
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	             <input name="content" class="form-control" type="hidden">
+                <label class="col-sm-3 control-label">更新时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="updateDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否删除 0未删除 1已删除：</label>
+                <div class="col-sm-8">
+                    <input name="delFlag" class="form-control" type="text">
+                </div>
             </div>
         </form>
     </div>
-    
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
-     <th:block th:include="include :: summernote-js" />	
     <script type="text/javascript">
-	    var prefix = ctx + "share/RobotDevice";
-	    var filefix = ctx + "system/fileinfo";
-	    $(document).ready(function () {
-	        $('.summernote').summernote({
-	        	height: 300, 
-	            lang: 'zh-CN'
-	        });
-	    }); 
-        $("#form-RobotDevice-add").validate({
+        var prefix = ctx + "share/RobotDeviceneed"
+        $("#form-RobotDeviceneed-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
-        	uploadFile();
-        	var html = $('.summernote').summernote('code');
-        	$('[name="content"]').val(html);
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-RobotDevice-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-RobotDeviceneed-add').serialize());
             }
         }
 
@@ -144,42 +139,6 @@
             minView: "month",
             autoclose: true
         });
-        function uploadFile() {
-        	var fileIds="";
-        	if ($('#filePath')[0].files[0] == null) {
-        		$.modal.alertWarning("请先选择文件路径");
-        		return false;
-        	}
-        	console.log($('#filePath')[0].files);
-        	let  files=$('#filePath')[0].files;
-        	for(var i=0;i<files.length;i++){
-        		let formData = new FormData();
-        		formData.append('file', $('#filePath')[0].files[i]); 
-        		 $.ajax({
-             		url: filefix + "/add",
-             		type: 'post',
-             		cache: false,
-             		data: formData,
-             		processData: false,
-             		contentType: false,
-             		dataType: "json",
-             		async: false,
-             		success: function(result) {
-             			console.log(result)
-             			var file = result.file;
-             			if (file) {
-             				console.log(file);
-             				fileIds+=file.filePath+",";
-             				 /* $('input[name="filename"]').val(file.fileName); 
-             				$('#filePath').val(file.filePath); */
-             			}
-             		}
-             	});
-        	}
-        	$("[name='picpath']").val(fileIds);
-        	
-        	 
-        }
     </script>
 </body>
 </html>

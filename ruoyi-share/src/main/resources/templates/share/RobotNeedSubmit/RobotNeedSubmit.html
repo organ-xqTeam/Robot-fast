@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('机器人设备列表')" />
-    
+    <th:block th:include="include :: header('需求信息列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -12,56 +11,34 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>名称：</p>
+                                <p>设备名称：</p>
                                 <input type="text" name="name"/>
                             </li>
-                            <li>
-                                <p>类型：</p>
-                                 <input type="text" name="type"/>
-                                <!-- <select name="type" th:with="type=${@dict.getType('')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select> -->
+                            <li class="select-time">
+                                <p>截止时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginEndDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endEndDate]"/>
                             </li>
                             <li>
-                                <p>品牌：</p>
-                                <input type="text" name="brand"/>
+                                <p>设备型号：</p>
+                                <input type="text" name="modelNumber"/>
                             </li>
                             <li>
-                                <p>型号：</p>
-                                <input type="text" name="model"/>
+                                <p>预算：</p>
+                                <input type="text" name="budgetMoney"/>
                             </li>
                             <li>
-                                <p>地区：</p>
-                                <input type="text" name="area"/>
+                                <p>其他说明：</p>
+                                <input type="text" name="contentInfo"/>
                             </li>
                             <li>
-                                <p>详细内容：</p>
-                                <input type="text" name="content"/>
+                                <p>图片路径或id：</p>
+                                <input type="text" name="picpath"/>
                             </li>
                             <li>
-                                <p>应用行业：</p>
-                                <input type="text" name="apply"/>
-                            </li>
-                            <li>
-                                <p>功能描述：</p>
-                                <input type="text" name="functionText"/>
-                            </li>
-                            <li>
-                                <p>租金：</p>
-                                <input type="text" name="rentMoney"/>
-                            </li>
-                            <li>
-                                <p>有线电话：</p>
-                                <input type="text" name="wirePhone"/>
-                            </li>
-                            <li>
-                                <p>联系人：</p>
-                                <input type="text" name="liaisonPeople"/>
-                            </li>
-                            <li>
-                                <p>手机号：</p>
-                                <input type="text" name="phone"/>
+                                <p>是否通过审核 0 未通过 1通过：</p>
+                                <input type="text" name="subFlag"/>
                             </li>
                             <li class="select-time">
                                 <p>创建时间：</p>
@@ -85,16 +62,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="share:RobotDevice:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="share:RobotNeedSubmit:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="share:RobotDevice:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="share:RobotNeedSubmit:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <!-- <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="share:RobotDevice:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="share:RobotNeedSubmit:remove">
                     <i class="fa fa-remove"></i> 删除
-                </a> -->
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="share:RobotDevice:export">
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="share:RobotNeedSubmit:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -105,9 +82,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('share:RobotDevice:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('share:RobotDevice:remove')}]];
-        var prefix = ctx + "share/RobotDevice";
+        var editFlag = [[${@permission.hasPermi('share:RobotNeedSubmit:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('share:RobotNeedSubmit:remove')}]];
+        var prefix = ctx + "share/RobotNeedSubmit";
 
         $(function() {
             var options = {
@@ -116,7 +93,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "机器人设备",
+                modalName: "需求信息",
                 columns: [{
                     checkbox: true
                 },
@@ -127,49 +104,31 @@
                 },
                 {
                     field : 'name', 
-                    title : '名称'
+                    title : '设备名称'
                 },
                 {
-                    field : 'type', 
-                    title : '类型'
+                    field : 'endDate', 
+                    title : '截止时间'
                 },
                 {
-                    field : 'brand', 
-                    title : '品牌'
+                    field : 'modelNumber', 
+                    title : '设备型号'
                 },
                 {
-                    field : 'model', 
-                    title : '型号'
+                    field : 'budgetMoney', 
+                    title : '预算'
                 },
                 {
-                    field : 'area', 
-                    title : '地区'
-                },
-                
-                
-                {
-                    field : 'apply', 
-                    title : '应用行业'
+                    field : 'contentInfo', 
+                    title : '其他说明'
                 },
                 {
-                    field : 'functionText', 
-                    title : '功能描述'
+                    field : 'picpath', 
+                    title : '图片路径或id'
                 },
                 {
-                    field : 'rentMoney', 
-                    title : '租金'
-                },
-                {
-                    field : 'wirePhone', 
-                    title : '有线电话'
-                },
-                {
-                    field : 'liaisonPeople', 
-                    title : '联系人'
-                },
-                {
-                    field : 'phone', 
-                    title : '手机号'
+                    field : 'subFlag', 
+                    title : '是否通过审核 0 未通过 1通过'
                 },
                 {
                     field : 'createDate', 

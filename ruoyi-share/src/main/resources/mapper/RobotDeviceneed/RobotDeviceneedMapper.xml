@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.share.mapper.RobotDeviceMapper">
+<mapper namespace="com.ruoyi.share.mapper.RobotDeviceneedMapper">
     
-    <resultMap type="RobotDevice" id="RobotDeviceResult">
+    <resultMap type="RobotDeviceneed" id="RobotDeviceneedResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="type"    column="type"    />
@@ -24,40 +24,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag"    column="del_flag"    />
     </resultMap>
 
-    <sql id="selectRobotDeviceVo">
-        select id, name, type, brand, model, area, picpath, content, apply, function_text, rent_money, wire_phone, liaison_people, phone, create_date, update_date, del_flag from robot_device
+    <sql id="selectRobotDeviceneedVo">
+        select id, name, type, brand, model, area, picpath, content, apply, function_text, rent_money, wire_phone, liaison_people, phone, create_date, update_date, del_flag from robot_deviceneed
     </sql>
 
-    <select id="selectRobotDeviceList" parameterType="RobotDevice" resultMap="RobotDeviceResult">
-        <include refid="selectRobotDeviceVo"/>
+    <select id="selectRobotDeviceneedList" parameterType="RobotDeviceneed" resultMap="RobotDeviceneedResult">
+        <include refid="selectRobotDeviceneedVo"/>
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%') </if>
-            <if test="brand != null  and brand != ''"> and brand like concat('%', #{brand}, '%')</if>
-            <if test="model != null  and model != ''"> and model like concat('%', #{model}, '%')</if>
-            <if test="area != null  and area != ''"> and area  like concat('%', #{area}, '%')</if>
-            <if test="picpath != null  and picpath != ''"> and picpath like concat('%', #{picpath}, '%')</if>
-            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
-            <if test="apply != null  and apply != ''"> and apply like concat('%', #{apply}, '%')</if>
-            <if test="functionText != null  and functionText != ''"> and function_text like concat('%', #{functionText}, '%')</if>
-            <if test="rentMoney != null  and rentMoney != ''"> and rent_money like concat('%', #{rentMoney}, '%')</if>
-            <if test="wirePhone != null  and wirePhone != ''"> and wire_phone like concat('%', #{wirePhone}, '%')</if>
-            <if test="liaisonPeople != null  and liaisonPeople != ''"> and liaison_people like concat('%', #{liaisonPeople}, '%')</if>
-            <if test="phone != null  and phone != ''"> and phone like concat('%', #{phone}, '%')</if>
-            <if test="createDate != null "> and create_date = #{createDate}</if>
-            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="type != null  and type != ''"> and type  like concat('%',  #{type}, '%') </if>
+            <if test="brand != null  and brand != ''"> and brand like concat('%',  #{brand}, '%')</if>
+            <if test="model != null  and model != ''"> and model like concat('%',  #{model}, '%')</if>
+            <if test="area != null  and area != ''"> and area like concat('%',  #{area}, '%')</if>
+            <if test="picpath != null  and picpath != ''"> and picpath like concat('%',  #{picpath}, '%')</if>
+            <if test="content != null  and content != ''"> and content like concat('%',  #{content}, '%')</if>
+            <if test="apply != null  and apply != ''"> and apply like concat('%',  #{apply}, '%')</if>
+            <if test="functionText != null  and functionText != ''"> and function_text like concat('%',  #{functionText}, '%')</if>
+            <if test="rentMoney != null  and rentMoney != ''"> and rent_money like concat('%',  #{rentMoney}, '%')</if>
+            <if test="wirePhone != null  and wirePhone != ''"> and wire_phone like concat('%',  #{wirePhone}, '%')</if>
+            <if test="liaisonPeople != null  and liaisonPeople != ''"> and liaison_people like concat('%',  #{liaisonPeople}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone like concat('%',  #{phone}, '%')</if>
+            <if test="createDate != null "> and create_date like concat('%',  #{createDate}, '%')</if>
+            <if test="updateDate != null "> and update_date like concat('%',  #{updateDate}, '%')</if>
             and del_flag ='0' 
         </where>
         order by id desc
     </select>
     
-    <select id="selectRobotDeviceById" parameterType="Long" resultMap="RobotDeviceResult">
-        <include refid="selectRobotDeviceVo"/>
+    <select id="selectRobotDeviceneedById" parameterType="Long" resultMap="RobotDeviceneedResult">
+        <include refid="selectRobotDeviceneedVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertRobotDevice" parameterType="RobotDevice" useGeneratedKeys="true" keyProperty="id">
-        insert into robot_device
+    <insert id="insertRobotDeviceneed" parameterType="RobotDeviceneed" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_deviceneed
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null  and name != ''">name,</if>
             <if test="type != null  and type != ''">type,</if>
@@ -96,8 +96,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateRobotDevice" parameterType="RobotDevice">
-        update robot_device
+    <update id="updateRobotDeviceneed" parameterType="RobotDeviceneed">
+        update robot_deviceneed
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null  and name != ''">name = #{name},</if>
             <if test="type != null  and type != ''">type = #{type},</if>
@@ -119,12 +119,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteRobotDeviceById" parameterType="Long">
-        delete from robot_device where id = #{id}
+    <delete id="deleteRobotDeviceneedById" parameterType="Long">
+        delete from robot_deviceneed where id = #{id}
     </delete>
 
-    <delete id="deleteRobotDeviceByIds" parameterType="String">
-        delete from robot_device where id in 
+    <delete id="deleteRobotDeviceneedByIds" parameterType="String">
+        delete from robot_deviceneed where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

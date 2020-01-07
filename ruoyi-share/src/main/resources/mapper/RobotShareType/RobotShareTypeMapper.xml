@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.share.mapper.RobotShareTypeMapper">
+    
+    <resultMap type="RobotShareType" id="RobotShareTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectRobotShareTypeVo">
+        select id, name, type, create_date, update_date, del_flag from robot_share_type
+    </sql>
+
+    <select id="selectRobotShareTypeList" parameterType="RobotShareType" resultMap="RobotShareTypeResult">
+        <include refid="selectRobotShareTypeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            and del_flag ='0' 
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectRobotShareTypeById" parameterType="Long" resultMap="RobotShareTypeResult">
+        <include refid="selectRobotShareTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobotShareType" parameterType="RobotShareType" useGeneratedKeys="true" keyProperty="id">
+        insert into robot_share_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="type != null  and type != ''">type,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobotShareType" parameterType="RobotShareType">
+        update robot_share_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobotShareTypeById" parameterType="Long">
+        delete from robot_share_type where id = #{id}
+    </delete>
+
+    <delete id="deleteRobotShareTypeByIds" parameterType="String">
+        delete from robot_share_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
