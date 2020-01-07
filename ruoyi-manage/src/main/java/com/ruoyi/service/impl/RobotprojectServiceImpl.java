@@ -1,6 +1,8 @@
 package com.ruoyi.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,12 @@ public class RobotprojectServiceImpl implements IRobotprojectService
     public List<Robotproject> selectRobotprojectList(Robotproject robotproject)
     {
         return robotprojectMapper.selectRobotprojectList(robotproject);
+    }
+    
+    @Override
+    public List<Robotproject> selectCount()
+    {
+        return robotprojectMapper.selectcount();
     }
 
     /**

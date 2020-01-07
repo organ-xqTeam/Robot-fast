@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('百度ECharts')" />
+</head>
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>柱状图</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="echarts" id="echarts-bar-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: echarts-js" />
+    <script type="text/javascript">
+    
+    	var prefix = ctx + "system/robotproject";
+    	var data;
+    	var xarr = new Array();
+    	var yarr = new Array();
+    	
+	    $(function () {
+	    	
+	    	$.ajax({
+        		url: prefix + "/selectcount",
+        		type: 'get',
+        		cache: false,
+        		processData: false,
+        		contentType: false,
+        		dataType: "json",
+        		async: false,
+        		success: function(result) {
+//         			console.log(result);
+        			data = result;
+        		}
+        	});
+	       
+// 	    	console.log(data);
+	    	for(var i=0; i<data.length; i++) {
+	  
+	    		var x=data[i].state; 
+	    		switch (x) 
+	    		{ 
+	    		  case "1":x="咨询阶段"; 
+	    		  break; 
+	    		  case "2":x="商务洽谈阶段"; 
+	    		  break; 
+	    		  case "3":x="策划阶段"; 
+	    		  break; 
+	    		  case "4":x="设计阶段"; 
+	    		  break; 
+	    		  case "5":x="测试实施阶段"; 
+	    		  break; 
+	    		  case "6":x="测试结论阶段"; 
+	    		  break; 
+	    		  default: x="未定义";
+	    		  break;
+	    		}
+	    		xarr.push(x);
+	    		yarr.push(data[i].count);
+	    	}
+	    	
+	    	console.log(xarr);
+	    	console.log(yarr);
+	        var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+	        var baroption = {
+	            title : {
+	                text: '项目状态统计'
+	            },
+	            tooltip : {
+	                trigger: 'axis'
+	            },
+	            legend: {
+	                data:['数量']
+	            },
+	            grid:{
+	                x:30,
+	                y:24
+	            },
+	            calculable : true,
+	            xAxis : [
+	                {
+	                    type : 'category',
+	                    data : xarr
+	                }
+	            ],
+	            yAxis : [
+	                {
+	                    type : 'value',
+	                    data:yarr
+	                }
+	            ],
+	            series : [
+	                {
+	                    name:'数量',
+	                    type:'bar',
+	                    data:yarr,
+	                    markPoint : {
+	                        data : [
+	                            {type : 'max', name: '最大值'},
+	                            {type : 'min', name: '最小值'}
+	                        ]
+	                    },
+	                    markLine : {
+	                        data : [
+	                            {type : 'average', name: '平均值'}
+	                        ]
+	                    }
+	                }
+	            ]
+	        };
+	        barChart.setOption(baroption);
+	
+	        window.onresize = barChart.resize;
+	
+	
+	    });
+    </script>
+</body>
+</html>

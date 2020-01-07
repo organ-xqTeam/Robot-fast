@@ -1,6 +1,8 @@
 package com.ruoyi.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -63,6 +66,19 @@ public class RobotprojectController extends BaseController
     	return prefix + "/approval4";
     }
     
+    @GetMapping("/count")
+    public String count()
+    {
+        return prefix + "/count";
+    }
+    
+    @GetMapping("/selectcount")
+    @ResponseBody
+    public List<Robotproject> selectcount()
+    {
+    	List<Robotproject> list = robotprojectService.selectCount();
+        return list;
+    }
 
     /**
      * 查询【请填写功能名称】列表

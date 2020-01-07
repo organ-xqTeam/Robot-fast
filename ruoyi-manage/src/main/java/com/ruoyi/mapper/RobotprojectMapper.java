@@ -1,6 +1,7 @@
 package com.ruoyi.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.domain.Robotproject;
 
@@ -27,6 +28,8 @@ public interface RobotprojectMapper
      * @return 【请填写功能名称】集合
      */
     public List<Robotproject> selectRobotprojectList(Robotproject robotproject);
+    
+    public List<Robotproject> selectcount();
     
     /**
      * 新增【请填写功能名称】

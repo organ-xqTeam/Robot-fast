@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="assessmentfile"    column="assessmentfile"    />
         <result property="assessmentfilename"    column="assessmentfilename"    />
         <result property="deleteFlag"    column="delete_flag"    />
+        <result property="count"    column="count"    />
     </resultMap>
 
     <sql id="selectRobotprojectVo">
@@ -71,6 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRobotprojectById" parameterType="Long" resultMap="RobotprojectResult">
         <include refid="selectRobotprojectVo"/>
         where id = #{id}
+    </select>
+    
+    <select id="selectcount" resultMap="RobotprojectResult">
+    	select count(*) as 'count', state from robotproject GROUP BY state
     </select>
         
     <insert id="insertRobotproject" parameterType="Robotproject">

@@ -135,7 +135,17 @@ public class Robotproject extends BaseEntity
     @Excel(name = "是否更新")
     private String deleteFlag;
 
-    public void setId(Long id) 
+    private String count;
+    
+    public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
+
+	public void setId(Long id) 
     {
         this.id = id;
     }

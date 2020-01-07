@@ -1,6 +1,7 @@
 package com.ruoyi.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.domain.Robotproject;
 
@@ -27,6 +28,8 @@ public interface IRobotprojectService
      * @return 【请填写功能名称】集合
      */
     public List<Robotproject> selectRobotprojectList(Robotproject robotproject);
+    
+    public List<Robotproject> selectCount();
 
     /**
      * 新增【请填写功能名称】
