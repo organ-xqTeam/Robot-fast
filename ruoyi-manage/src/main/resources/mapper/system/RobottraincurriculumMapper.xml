@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mapper.RobottraincurriculumMapper">
+    
+    <resultMap type="Robottraincurriculum" id="RobottraincurriculumResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="content"    column="content"    />
+        <result property="price"    column="price"    />
+        <result property="online"    column="online"    />
+        <result property="logo"    column="logo"    />
+        <result property="type"    column="type"    />
+        <result property="url"    column="url"    />
+        <result property="praise"    column="praise"    />
+        <result property="browse"    column="browse"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectRobottraincurriculumVo">
+        select id, title, introduce, content, price, online, logo, type, url, praise, browse, delete_flag from robottraincurriculum
+    </sql>
+
+    <select id="selectRobottraincurriculumList" parameterType="Robottraincurriculum" resultMap="RobottraincurriculumResult">
+        <include refid="selectRobottraincurriculumVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="price != null  and price != ''"> and price = #{price}</if>
+            <if test="online != null  and online != ''"> and online = #{online}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="praise != null  and praise != ''"> and praise = #{praise}</if>
+            <if test="browse != null  and browse != ''"> and browse = #{browse}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectRobottraincurriculumById" parameterType="Long" resultMap="RobottraincurriculumResult">
+        <include refid="selectRobottraincurriculumVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobottraincurriculum" parameterType="Robottraincurriculum" useGeneratedKeys="true" keyProperty="id">
+        insert into robottraincurriculum
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="introduce != null  and introduce != ''">introduce,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="price != null  and price != ''">price,</if>
+            <if test="online != null  and online != ''">online,</if>
+            <if test="logo != null  and logo != ''">logo,</if>
+            <if test="type != null  and type != ''">type,</if>
+            <if test="url != null  and url != ''">url,</if>
+            <if test="praise != null  and praise != ''">praise,</if>
+            <if test="browse != null  and browse != ''">browse,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="introduce != null  and introduce != ''">#{introduce},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="price != null  and price != ''">#{price},</if>
+            <if test="online != null  and online != ''">#{online},</if>
+            <if test="logo != null  and logo != ''">#{logo},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="url != null  and url != ''">#{url},</if>
+            <if test="praise != null  and praise != ''">#{praise},</if>
+            <if test="browse != null  and browse != ''">#{browse},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobottraincurriculum" parameterType="Robottraincurriculum">
+        update robottraincurriculum
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="introduce != null  and introduce != ''">introduce = #{introduce},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="price != null  and price != ''">price = #{price},</if>
+            <if test="online != null  and online != ''">online = #{online},</if>
+            <if test="logo != null  and logo != ''">logo = #{logo},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="url != null  and url != ''">url = #{url},</if>
+            <if test="praise != null  and praise != ''">praise = #{praise},</if>
+            <if test="browse != null  and browse != ''">browse = #{browse},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobottraincurriculumById" parameterType="Long">
+        delete from robottraincurriculum where id = #{id}
+    </delete>
+
+    <delete id="deleteRobottraincurriculumByIds" parameterType="String">
+        delete from robottraincurriculum where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

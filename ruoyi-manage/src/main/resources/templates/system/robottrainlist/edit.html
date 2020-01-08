@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+	<th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-robottrainlist-edit" th:object="${robottrainlist}">
+            <input name="id" th:field="*{id}" type="hidden">
+           	<input name="content" th:value="*{content}" type="hidden"/>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类型：</label>
+                <div class="col-sm-8">
+	                <select name="type" class="form-control" th:with="type=${@dict.getType('robot_train_type')}">
+	                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:selected="*{type}==${dict.dictValue}"></option>
+	                </select>
+	        	</div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">标题：</label>
+                <div class="col-sm-8">
+                    <input name="title" th:field="*{title}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">logo：</label>
+                <div class="col-sm-8">
+                    <input name="logo" class="form-control" type="text" style="display: none">
+			        <input id="filePath" name="filePath" class="form-control" type="file">
+                </div>
+            </div>
+            <div class="form-group">    
+	            <div class="col-sm-12">
+	                <div class="ibox float-e-margins">
+	                    <div class="ibox-title">
+	                        <h5>内容</h5>
+	                    </div>
+	                    <div class="ibox-content no-padding">
+	                        <div class="summernote">
+	                            
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: summernote-js" />	
+    <script type="text/javascript">
+    
+        var prefix = ctx + "system/robottrainlist";
+        var filefix = ctx + "system/fileinfo";
+        
+        $(document).ready(function () {
+ 	       	var content = $('input[name="content"]').val();
+	        $('.summernote').summernote({
+	        	height: 300, 
+	            lang: 'zh-CN',
+	            callbacks:{//回调函数，重写onImageUpload方法
+	                onImageUpload: function(files, editor, welEditable) {
+	                    sendFile(this,files[0],editor,welEditable);
+	                }
+	            }
+	        });
+	        $('.summernote').summernote('code',content);
+	    });  
+        
+        $("#form-robottrainlist-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+        	var html = $('.summernote').summernote('code');
+        	$('input[name="content"]').val(html);
+            if ($.validate.form()) {
+            	uploadFile();
+                $.operate.save(prefix + "/edit", $('#form-robottrainlist-edit').serialize());
+            }
+        }
+
+        function uploadFile() {
+        	var formData = new FormData();
+        	if ($('#filePath')[0].files[0] == null) {
+        		$.modal.alertWarning("请先选择文件路径");
+        		return false;
+        	}
+        	formData.append('file', $('#filePath')[0].files[0]);        	
+        	$.ajax({
+        		url: filefix + "/add",
+        		type: 'post',
+        		cache: false,
+        		data: formData,
+        		processData: false,
+        		contentType: false,
+        		dataType: "json",
+        		async: false,
+        		success: function(result) {
+        			var file = result.file;
+        			if (file) {
+        				$('input[name="logo"]').val(file.filePath);
+        			}
+        		}
+        	});
+        }
+    </script>
+</body>
+</html>

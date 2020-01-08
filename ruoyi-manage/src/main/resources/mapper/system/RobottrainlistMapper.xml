@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mapper.RobottrainlistMapper">
+    
+    <resultMap type="Robottrainlist" id="RobottrainlistResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="logo"    column="logo"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="enterdate"    column="enterdate"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectRobottrainlistVo">
+        select id, type, logo, title, content, enterdate, delete_flag from robottrainlist
+    </sql>
+
+    <select id="selectRobottrainlistList" parameterType="Robottrainlist" resultMap="RobottrainlistResult">
+        <include refid="selectRobottrainlistVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="enterdate != null  and enterdate != ''"> and enterdate = #{enterdate}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectRobottrainlistById" parameterType="Long" resultMap="RobottrainlistResult">
+        <include refid="selectRobottrainlistVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRobottrainlist" parameterType="Robottrainlist" useGeneratedKeys="true" keyProperty="id">
+        insert into robottrainlist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">type,</if>
+            <if test="logo != null  and logo != ''">logo,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="enterdate != null  and enterdate != ''">enterdate,</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="logo != null  and logo != ''">#{logo},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="enterdate != null  and enterdate != ''">#{enterdate},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRobottrainlist" parameterType="Robottrainlist">
+        update robottrainlist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="logo != null  and logo != ''">logo = #{logo},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="enterdate != null  and enterdate != ''">enterdate = #{enterdate},</if>
+            <if test="deleteFlag != null  and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRobottrainlistById" parameterType="Long">
+        delete from robottrainlist where id = #{id}
+    </delete>
+
+    <delete id="deleteRobottrainlistByIds" parameterType="String">
+        delete from robottrainlist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
