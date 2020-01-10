@@ -96,7 +96,6 @@
 	        $('.summernote').summernote('code',content);
 	    });  
         
-       
         $("#form-robottraincurriculum-edit").validate({
             focusCleanup: true
         });
@@ -133,6 +132,30 @@
         			}
         		}
         	});
+        }
+        
+        function sendFile(val,files,editor,welEditable) {
+            data = new FormData();
+            data.append("file", files);
+            $.ajax({
+                data: data,
+                dataType: 'json',
+                type: "POST",
+        		url: filefix + "/add",
+                cache: false,
+                contentType: false,
+                processData: false,
+                responseType: "json",
+                success: function(result) {
+        			var file = result.file;
+                    $(val).summernote('editor.insertImage', file.filePath);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
         }
         
         if ($('select[name="online"]').val() == '2') {
